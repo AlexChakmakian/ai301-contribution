@@ -1,15 +1,16 @@
-# Contribution [#]: [Issue Title]
+# Contribution [1]: [Enable automatic precommit-ci TypeScript code formatting]
 
-**Contribution Number:** [1 / 2 / 3]  
-**Student:** [Your Name]  
-**Issue:** [GitHub issue link]  
-**Status:** [Phase I / Phase II / Phase III / Phase IV] [In Progress / Complete]
+**Contribution Number:** [1]  
+**Student:** [Alexander Chakmakian]  
+**Issue:** [https://github.com/maplibre/maplibre-tile-spec/issues/842]  
+**Status:** [Phase I]
 
 ---
 
 ## Why I Chose This Issue
 
-[1-2 paragraphs explaining why this issue interests you, how it matches your skills/learning goals, what you hope to learn]
+I chose this issue because it sparked my interest in the maplibre project and founder Nyurik who created the project. Nyurik also has an impressive background which caught my eye in being a contributor. This issue also seems to match my interest in both JavaScript/TypeScript development and software development workflows which I've been getting more experience in.
+I also chose this issue because I wanted to contribute to a project that I find interesting even if my contribution is something small. I like that this issue improves the developer workflow while it's on something that is being used widely by many today.
 
 ---
 
