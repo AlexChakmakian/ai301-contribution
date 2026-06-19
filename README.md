@@ -3,7 +3,7 @@
 **Contribution Number:** [1]  
 **Student:** [Alexander Chakmakian]  
 **Issue:** [https://github.com/maplibre/maplibre-tile-spec/issues/842]  
-**Status:** [Phase I]
+**Status:** [Phase III]
 
 ---
 
@@ -97,50 +97,70 @@ Using UMPIRE framework (adapted):
 
 ### Unit Tests
 
-- [ ] Test case 1: [Description]
-- [ ] Test case 2: [Description]
-- [ ] Test case 3: [Description]
+This issue was more about developer tooling than changing TypeScript logic, so I did not add new unit tests. I still ran the existing TypeScript test suite to make sure my tooling change did not break the package.
 
 ### Integration Tests
 
-- [ ] Integration scenario 1
-- [ ] Integration scenario 2
+I tested this through the same commands the project and CI already use. The main thing I wanted to confirm was that formatting is now part of the normal TypeScript lint path, instead of only depending on pre-commit being installed locally.
 
 ### Manual Testing
 
-[What you tested manually and results]
+I tested the change locally from the ts folder.
+
+Commands I ran:
+
+1. npm ci
+2. npm run format:check
+3. npm run format
+4. npm run lint
+5. npm run test
+6. npm run build
+
+Results:
+
+- npm ci installed the TypeScript dependencies successfully.
+- npm run format:check checked 104 TypeScript files and passed with no fixes needed.
+- npm run format ran successfully and did not change any source files.
+- npm run lint passed.
+- npm run test passed with 27 test files passing and 1011 tests passing, with 5 skipped tests.
+- npm run build passed with tsc.
+
+I also tested the failure case by temporarily adding badly formatted code to one TypeScript file. npm run format:check failed like expected, which proved the formatting gate actually works. After that, I restored the file so no source code changes were included in the PR.
 
 ---
 
 ## Implementation Notes
 
-### Week [X] Progress
+### Phase III Progress
 
-[What you built this week, challenges faced, decisions made]
+For Phase III, I moved from planning the fix to actually implementing it and opening the pull request. My branch is here:
 
-### Week [Y] Progress
+https://github.com/AlexChakmakian/maplibre-tile-spec/tree/enable-ts-biome-formatting
 
-[Continue documenting as you work]
+The implementation ended up being small, but it fixes the missing part of the previous Biome setup. The earlier PR had already added Biome and pre-commit support, but the TypeScript package still did not have a working npm format command, and CI was not checking formatting through the normal lint command.
+
+I added Biome as a TypeScript dev dependency, added format scripts, and updated the TypeScript just lint command so it also checks formatting. That means contributors can run the formatter locally, and CI can catch unformatted TypeScript before it gets merged.
+
+After opening the PR, GitHub Copilot left a review comment saying that my first version used biome check, which runs more than formatting. That feedback made sense because this issue is specifically about formatting, not adding another linter. I updated the scripts to use biome format instead, so the PR stays focused on formatting only.
 
 ### Code Changes
 
-- **Files modified:** [List]
-- **Key commits:** [Links to important commits]
-- **Approach decisions:** [Why you chose certain approaches]
+- **Files modified:** ts/package.json, ts/package-lock.json, ts/mod.just
+- **Branch:** https://github.com/AlexChakmakian/maplibre-tile-spec/tree/enable-ts-biome-formatting
+- **Approach decisions:** I kept the change focused on the TypeScript tooling instead of changing source code. I also scoped the Biome commands to ./src because all the TypeScript source files are there, and this avoids changing JSON config files that the existing pre-commit setup already excludes.
 
 ---
 
 ## Pull Request
 
-**PR Link:** [GitHub PR URL when submitted]
+**PR Link:** [https://github.com/maplibre/maplibre-tile-spec/pull/1456]
 
-**PR Description:** [Draft or final PR description - much of the content above can be adapted]
+**PR Description:** The PR explains that this builds on the existing Biome setup by adding npm format scripts and making the TypeScript lint step check formatting too. The main goal is to prevent unformatted TypeScript from getting merged if a contributor does not have pre-commit installed locally.
 
 **Maintainer Feedback:**
-- [Date]: [Summary of feedback received]
-- [Date]: [How you addressed it]
+- June 19: Copilot suggested using biome format instead of biome check because the issue is only about formatting. I agreed with the feedback and updated the scripts so Biome only runs as a formatter.
 
-**Status:** [Awaiting review / Iterating / Approved / Merged]
+**Status:** Open / awaiting maintainer review
 
 ---
 
@@ -148,20 +168,21 @@ Using UMPIRE framework (adapted):
 
 ### Technical Skills Gained
 
-[What you learned technically]
+I learned more about how npm scripts, package-lock.json, just commands, and CI all connect together. Before this, I knew formatting tools existed, but this helped me understand how a project actually enforces formatting so it is not just optional on each developer's computer.
 
 ### Challenges Overcome
 
-[What was hard and how you solved it]
+The main challenge was figuring out what part of the issue was already fixed and what part was still missing. At first it looked like Biome had already solved the issue, but after testing locally I found that the format command was missing and CI was not checking formatting. I also learned from the Copilot review that biome format was a better fit than biome check because this PR is only about formatting.
 
 ### What I'd Do Differently Next Time
 
-[Reflection on your process]
+Next time I would check the existing history and CI setup earlier before assuming the issue needs to be solved from scratch. I would also test the exact commands mentioned in the repo first, because that is how I found the broken npm run format script.
 
 ---
 
 ## Resources Used
 
-- [Link to helpful documentation]
-- [Tutorial or Stack Overflow post that helped]
-- [GitHub issues or discussions that helped]
+- Issue #842: https://github.com/maplibre/maplibre-tile-spec/issues/842
+- Pull request #1456: https://github.com/maplibre/maplibre-tile-spec/pull/1456
+- Biome formatting docs: https://biomejs.dev/formatter/
+- pre-commit docs: https://pre-commit.com/
