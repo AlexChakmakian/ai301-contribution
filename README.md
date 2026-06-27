@@ -3,7 +3,7 @@
 **Contribution Number:** [1]  
 **Student:** [Alexander Chakmakian]  
 **Issue:** [https://github.com/maplibre/maplibre-tile-spec/issues/842]  
-**Status:** [Phase III]
+**Status:** [Merged]
 
 ---
 
@@ -131,7 +131,7 @@ I also tested the failure case by temporarily adding badly formatted code to one
 
 ## Implementation Notes
 
-### Phase III Progress
+### Phase III / IV Progress
 
 For Phase III, I moved from planning the fix to actually implementing it and opening the pull request. My branch is here:
 
@@ -143,9 +143,13 @@ I added Biome as a TypeScript dev dependency, added format scripts, and updated 
 
 After opening the PR, GitHub Copilot left a review comment saying that my first version used biome check, which runs more than formatting. That feedback made sense because this issue is specifically about formatting, not adding another linter. I updated the scripts to use biome format instead, so the PR stays focused on formatting only.
 
+During review, the maintainer also asked if the formatting could be fixed automatically instead of only failing the check and making contributors fix it manually. That was a good point because the original issue is about automatic formatting. To address that, I added a TypeScript formatting job to the existing autofix.ci workflow. The job runs just ts::fmt on pull requests and uses autofix-ci/action to commit formatting fixes back to the PR branch when needed.
+
+After those updates, the maintainer accepted and merged the PR. This completed my first contribution to the MapLibre Tile Spec project.
+
 ### Code Changes
 
-- **Files modified:** ts/package.json, ts/package-lock.json, ts/mod.just
+- **Files modified:** ts/package.json, ts/package-lock.json, ts/mod.just, .github/workflows/autofix.yml
 - **Branch:** https://github.com/AlexChakmakian/maplibre-tile-spec/tree/enable-ts-biome-formatting
 - **Approach decisions:** I kept the change focused on the TypeScript tooling instead of changing source code. I also scoped the Biome commands to ./src because all the TypeScript source files are there, and this avoids changing JSON config files that the existing pre-commit setup already excludes.
 
@@ -155,12 +159,14 @@ After opening the PR, GitHub Copilot left a review comment saying that my first 
 
 **PR Link:** [https://github.com/maplibre/maplibre-tile-spec/pull/1456]
 
-**PR Description:** The PR explains that this builds on the existing Biome setup by adding npm format scripts and making the TypeScript lint step check formatting too. The main goal is to prevent unformatted TypeScript from getting merged if a contributor does not have pre-commit installed locally.
+**PR Summary:** This PR builds on the existing Biome setup for the TypeScript code. It adds Biome as a TypeScript dev dependency, adds working format scripts, makes the TypeScript lint step check formatting, and adds an autofix.ci job so formatting can be applied automatically on pull requests. The main goal is to prevent unformatted TypeScript from getting merged while also reducing manual work for contributors.
 
 **Maintainer Feedback:**
 - June 19: Copilot suggested using biome format instead of biome check because the issue is only about formatting. I agreed with the feedback and updated the scripts so Biome only runs as a formatter.
+- June 20: A maintainer asked if the PR could add an autofix or pre-commit hook so contributors do not have to manually fix formatting. I updated the PR by adding a TypeScript job to the existing autofix.ci workflow. It runs just ts::fmt and lets autofix-ci/action commit formatting fixes automatically.
+- June 22: The maintainer merged the PR and thanked me for the contribution.
 
-**Status:** Open / awaiting maintainer review
+**Status:** Merged
 
 ---
 
@@ -170,9 +176,15 @@ After opening the PR, GitHub Copilot left a review comment saying that my first 
 
 I learned more about how npm scripts, package-lock.json, just commands, and CI all connect together. Before this, I knew formatting tools existed, but this helped me understand how a project actually enforces formatting so it is not just optional on each developer's computer.
 
+I also learned the difference between a CI check that only fails and an autofix workflow that can actually apply the fix for a contributor. That was an important distinction for this issue because the maintainer wanted the formatting process to be automatic, not just enforced.
+
 ### Challenges Overcome
 
 The main challenge was figuring out what part of the issue was already fixed and what part was still missing. At first it looked like Biome had already solved the issue, but after testing locally I found that the format command was missing and CI was not checking formatting. I also learned from the Copilot review that biome format was a better fit than biome check because this PR is only about formatting.
+
+Another challenge was understanding the maintainer's feedback about autofix. I first thought the PR was done once CI checked formatting, but the maintainer wanted the workflow to fix formatting automatically when possible. I updated the PR to add that automatic step.
+
+The most rewarding part was seeing the PR get accepted and merged after responding to feedback. It helped me understand that open source contribution is not just about the first version of the code, but also about being willing to iterate with maintainers.
 
 ### What I'd Do Differently Next Time
 
