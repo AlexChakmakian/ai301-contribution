@@ -1,15 +1,15 @@
-# Contribution [#2]: [Issue Title]
+# Contribution [2]: [docs: expand minimal platform recipes (aider, cursor, windsurf)]
 
-**Contribution Number:** [2]
-**Student:** Alexander Chakmakian 
-**Issue:** [GitHub issue link]  
+**Contribution Number:** [2]  
+**Student:** Alexander Chakmakian
+**Issue:** [https://github.com/Raftersecurity/rafter-cli/issues/33]
 **Status:** [Phase I]
 
 ---
 
 ## Why I Chose This Issue
 
-[1-2 paragraphs explaining why this issue interests you, how it matches your skills/learning goals, what you hope to learn]
+I chose this issue because it is a clear documentation task with a gold-standard example (`recipes/gemini-cli.md`) and a scoped path. I can expand just the Cursor recipe. Cursor is the AI coding tool I use most, so this is a good first contribution where I can verify the docs myself and learn how Rafter integrates with agent platforms which seems interesting.
 
 ---
 
