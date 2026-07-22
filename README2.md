@@ -3,7 +3,7 @@
 **Contribution Number:** [2]  
 **Student:** Alexander Chakmakian
 **Issue:** [https://github.com/Raftersecurity/rafter-cli/issues/33]
-**Status:** [Phase I]
+**Status:** [Phase II]
 
 ---
 
@@ -17,19 +17,26 @@ I chose this issue because it is a clear documentation task with a gold-standard
 
 ### Problem Description
 
-[In your own words, what's broken or missing?]
+This is incomplete docs, not a code bug. `recipes/cursor.md` should match the detail level of `recipes/gemini-cli.md`. Rome-1 assigned me the Cursor recipe and said it needs the same six sections: Prerequisites, Setup, Verify, MCP tools reference, Troubleshooting, and Uninstall.
 
 ### Expected Behavior
 
-[What should happen?]
+A Cursor user should be able to set up Rafter, verify it, understand the MCP tools, troubleshoot common problems, and uninstall - all from `recipes/cursor.md`.
 
 ### Current Behavior
 
-[What actually happens?]
+Rome-1 noted the file has grown since the issue was filed (~36 → ~58 lines), so the old issue table is outdated. I checked the current file against the six sections. Setup and verify are already solid. Tools are named in one line but not really explained. Biggest gaps right now:
+
+- tool usage examples
+- Troubleshooting
+
+I may still need light Prerequisites / Uninstall / MCP tools reference work after a careful pass, but I will not rewrite setup that already works.
 
 ### Affected Components
 
-[Which parts of the codebase are involved?]
+- `recipes/cursor.md` (the file I will edit)
+- `recipes/gemini-cli.md` (gold standard)
+- `recipes/opencode.md` (Rome-1 said use this for the MCP tools section shape)
 
 ---
 
@@ -37,19 +44,20 @@ I chose this issue because it is a clear documentation task with a gold-standard
 
 ### Environment Setup
 
-[Notes on setting up your local development environment - challenges you faced, how you solved them]
+Forked and cloned `Raftersecurity/rafter-cli`, made a branch off main. Compared `cursor.md` to `gemini-cli.md` and `opencode.md`. Docs-only, so no build step.
 
 ### Steps to Reproduce
 
-1. [Step 1]
-2. [Step 2]
-3. [Observed result]
+1. Open current `recipes/cursor.md` (not the old version from the issue).
+2. Check it against the six sections Rome-1 listed.
+3. Note what is missing vs Gemini / OpenCode.
+
+Observed result: setup/verify are fine. Tools are listed but not described with examples. No Troubleshooting section.
 
 ### Reproduction Evidence
 
-- **Commit showing reproduction:** [Link to commit in your fork]
-- **Screenshots/logs:** [If applicable]
-- **My findings:** [What you discovered during reproduction]
+- Commit showing reproduction: N/A (docs gap, not a failing test)
+- My findings: trust the current file + Rome-1's section list, not the original issue table
 
 ---
 
@@ -57,31 +65,32 @@ I chose this issue because it is a clear documentation task with a gold-standard
 
 ### Analysis
 
-[Your analysis of the root cause - what's causing the issue?]
+Cursor got good setup docs first; Gemini and OpenCode show the fuller recipe shape. My job is to close the remaining gaps in `cursor.md`.
 
 ### Proposed Solution
 
-[High-level description of your fix approach]
+Edit only `recipes/cursor.md`. Keep existing setup/verify. Add tool usage examples and Troubleshooting, and fill any other thin sections from the six-section list. Shape the MCP tools reference like `opencode.md` (`scan_secrets`, `evaluate_command`, `read_audit_log`, `get_config`).
 
 ### Implementation Plan
 
 Using UMPIRE framework (adapted):
 
-**Understand:** [Restate the problem]
+**Understand:** Bring Cursor docs up to the six-section bar without rewriting what already works.
 
-**Match:** [What similar patterns/solutions exist in the codebase?]
+**Match:** Gemini for overall coverage; OpenCode for the MCP tools section shape.
 
-**Plan:** [Step-by-step implementation plan]
-1. [Modify file X to do Y]
-2. [Add function Z]
-3. [Update tests]
+**Plan:**
+1. Diff current `cursor.md` against the six sections and list what is still missing.
+2. Expand the MCP tools reference with short usage examples.
+3. Add Troubleshooting for common Cursor issues.
+4. Fill any other thin sections (Prerequisites, Uninstall) if needed.
+5. Open a docs PR for `#33` (Phase III/IV).
 
-**Implement:** [Link to your branch/commits as you work]
+**Implement:** [Phase III]
 
-**Review:** [Self-review checklist - does it follow the project's contribution guidelines?]
+**Review:** [Phase III]
 
-**Evaluate:** [How will you verify it works?]
-
+**Evaluate:** [Phase III]
 ---
 
 ## Testing Strategy
@@ -153,6 +162,7 @@ Using UMPIRE framework (adapted):
 
 ## Resources Used
 
-- [Link to helpful documentation]
-- [Tutorial or Stack Overflow post that helped]
-- [GitHub issues or discussions that helped]
+- [Issue #33](https://github.com/Raftersecurity/rafter-cli/issues/33) (including Rome-1's guidance on Cursor scope)
+- [Current `recipes/cursor.md`](https://github.com/Raftersecurity/rafter-cli/blob/main/recipes/cursor.md)
+- [Gold standard `recipes/gemini-cli.md`](https://github.com/Raftersecurity/rafter-cli/blob/main/recipes/gemini-cli.md)
+- [`recipes/opencode.md`](https://github.com/Raftersecurity/rafter-cli/blob/main/recipes/opencode.md) (shape for MCP tools reference)
